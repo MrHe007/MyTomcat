@@ -2,6 +2,8 @@ package com.bigguy.server.server1;
 
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +15,9 @@ import java.io.InputStream;
  */
 @Data
 public class MyHttpRequest {
+
+
+    private Logger logger = LoggerFactory.getLogger(MyHttpRequest.class);
 
     private InputStream inputStream;
 
@@ -48,7 +53,7 @@ public class MyHttpRequest {
         }
         buffer.append(new String(bufferArr, 0, len));
 
-        System.out.println("request content：\n" + buffer.toString());
+        logger.info("request content：\n" + buffer.toString());
 
         // 解析出 requestUri
         this.requestUri = parseUri(buffer.toString());

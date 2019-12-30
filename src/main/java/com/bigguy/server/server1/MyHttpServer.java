@@ -2,6 +2,8 @@ package com.bigguy.server.server1;
 
 import com.bigguy.server.cst.SystemCst;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.net.Socket;
  */
 public class MyHttpServer {
 
+    private Logger logger = LoggerFactory.getLogger(MyHttpServer.class);
 
     /**
      * 服务器的根目录
@@ -32,7 +35,6 @@ public class MyHttpServer {
 
     public MyHttpServer(int port) {
         this.port = port;
-
         // 初始化容器
         this.init(port);
     }
@@ -52,8 +54,8 @@ public class MyHttpServer {
      * 初始化容器资源
      */
     public void init(int port) {
-        System.out.println("server init.... port：" + port);
-        System.out.println("server root path: " + WEB_ROOT);
+        logger.info("server init.... port：{}", port);
+        logger.info("server root path:{} ", WEB_ROOT);
         try {
             // 不能写成下面这个形式
 //            this.serverSocket = new ServerSocket(port);
