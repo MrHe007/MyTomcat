@@ -2,8 +2,11 @@ package com.bigguy.server.server1;
 
 import com.bigguy.server.cst.HttpCst;
 import com.bigguy.server.util.HttpUtils;
+import com.bigguy.server.util.ResponseHandleUtils;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +25,7 @@ public class MyHttpResponse {
     private OutputStream outputStream;
     private MyHttpRequest request;
 
+    private Logger logger = LoggerFactory.getLogger(MyHttpResponse.class);
 
     public MyHttpResponse(OutputStream outputStream) {
         this.outputStream = outputStream;
@@ -45,27 +49,24 @@ public class MyHttpResponse {
                 fis = new FileInputStream(file);
 
                 // 写成功
-                HttpUtils.responseSuccess(outputStream);
+                ResponseHandleUtils.responseSuccess(outputStream);
 
                 if(HttpUtils.isImgUri(request.getRequestUri())){
-                    HttpUtils.setContentType(outputStream, HttpCst.Content_Type.IMG_Content_Type);
+                    ResponseHandleUtils.setContentType(outputStream, HttpCst.ContentType.IMG_CONTENT_TYPE);
                 }
 
                 // 头写完成
-                HttpUtils.finishResponseHeader(outputStream);
+                ResponseHandleUtils.finishResponseHeader(outputStream);
                 int len ;
                 while ((len = fis.read(buffer)) != -1){
                     // 写到输出流中
                     outputStream.write(buffer, 0, len);
                 }
             }else{
-                // 文件找不到，提示错误
-                String errorMsg = "HTTP/1.1 404 File Not Found\r\n"+
-                        "Content_type: text/html\r\n" +
-                        "Content_length: 23\r\n" +
-                        "\r\n" +
-                        "<h1>file not found</h1>";
-                outputStream.write(errorMsg.getBytes());
+                logger.error("没有这个链接...");
+                // 处理404错误
+                ResponseHandleUtils.handle404Error(outputStream);
+
             }
 
 

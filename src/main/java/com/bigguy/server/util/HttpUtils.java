@@ -43,52 +43,11 @@ public class HttpUtils {
                 if(requestUri.indexOf(imgSuffix) > 0){
                     return true;
                 }
-
             }
         }
         return false;
     }
 
-    /**
-     * 响应成功
-     * @param outputStream
-     */
-    public static void responseSuccess(OutputStream outputStream){
-        try {
-            outputStream.write(HttpCst.ResonseStatus.RESP_SUCCESS.getBytes());
-        } catch (IOException e) {
-            System.out.println("响应失败");
-            e.printStackTrace();
-        }
-    }
 
-
-    /**
-     * 设置 content-type
-     * @param outputStream
-     * @param contentType
-     */
-    public static void setContentType(OutputStream outputStream, String contentType){
-        StringBuffer sb = new StringBuffer(HttpCst.ResponseHeader.Content_Type );
-        sb.append(contentType);
-        sb.append(HttpCst.CRLF);
-        try {
-            outputStream.write(sb.toString().getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 响应头与响应体之间空格隔开
-     * @param outputStream
-     */
-    public static void finishResponseHeader(OutputStream outputStream){
-        try {
-            outputStream.write(HttpCst.CRLF.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 }

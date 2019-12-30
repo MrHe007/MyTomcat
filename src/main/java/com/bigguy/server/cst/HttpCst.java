@@ -26,10 +26,13 @@ public interface HttpCst {
     String CRLF = "\r\n";
 
     /**
-     * 响应头部
+     * 响应头部，注意: 后面有一个空格
      */
     interface ResponseHeader{
-        String Content_Type = "content-type: ";
+        String CONTENT_TYPE = "content-type: ";
+
+
+        String CONTENT_LENGTH = "Content_length: ";
     }
 
     /**
@@ -42,17 +45,35 @@ public interface HttpCst {
          */
         String RESP_SUCCESS = "HTTP/1.1 200 ok" + CRLF;
 
+        /**
+         * 404页面找不到
+         */
+        String ERROR_404 = "HTTP/1.1 404 File Not Found" + CRLF;
+
+        /**
+         * 405
+         */
+        String ERROR_405 = "HTTP/1.1 405 Method Not Allowed" + CRLF;
+
+
     }
 
     /**
      * 响应类型
      */
-    interface Content_Type{
+    interface ContentType{
 
         /**
          * 图片类型
          */
-        String IMG_Content_Type = "image/jpeg";
+        String IMG_CONTENT_TYPE = "image/jpeg";
+
+        /**
+         * 文本响应类型
+         */
+        String HTML_TEXT = " text/html";
+
+
 
     }
 

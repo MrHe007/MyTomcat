@@ -1,13 +1,13 @@
 package com.bigguy.server.server2;
 
 import com.bigguy.server.cst.HttpCst;
-import com.bigguy.server.util.HttpUtils;
+import com.bigguy.server.util.ResponseHandleUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.OutputStream;
-import java.io.IOException;
-import java.io.FileInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /*
   HTTP Response = Status-Line
@@ -40,15 +40,15 @@ public class Response {
                 fis = new FileInputStream(file);
 
                 // 写成功
-                HttpUtils.responseSuccess(output);
+                ResponseHandleUtils.responseSuccess(output);
 
                 // 如果是图片，则将图片的 content-type 写入，浏览器展示图片
                 if(StringUtils.isNotBlank(request.getUri()) && request.getUri().indexOf("png")>0){
-                    HttpUtils.setContentType(output, HttpCst.Content_Type.IMG_Content_Type);
+                    ResponseHandleUtils.setContentType(output, HttpCst.ContentType.IMG_CONTENT_TYPE);
                 }
 
                 // 开始写数据
-                HttpUtils.finishResponseHeader(output);
+                ResponseHandleUtils.finishResponseHeader(output);
 
                 int ch = fis.read(bytes, 0, BUFFER_SIZE);
                 while (ch != -1) {
