@@ -22,4 +22,5 @@ public interface SystemCst {
      */
     String CHAR_SET = "utf-8";
 
+
 }

@@ -1,5 +1,9 @@
 package com.bigguy.server.server2;
 
+import com.bigguy.server.cst.HttpCst;
+import com.bigguy.server.util.HttpUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.OutputStream;
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -34,7 +38,17 @@ public class Response {
             File file = new File(HttpServer.WEB_ROOT, request.getUri());
             if (file.exists()) {
                 fis = new FileInputStream(file);
-                output.write("http/1.1 200 ok\n\n".getBytes());
+
+                // 写成功
+                HttpUtils.responseSuccess(output);
+
+                // 如果是图片，则将图片的 content-type 写入，浏览器展示图片
+                if(StringUtils.isNotBlank(request.getUri()) && request.getUri().indexOf("png")>0){
+                    HttpUtils.setContentType(output, HttpCst.Content_Type.IMG_Content_Type);
+                }
+
+                // 开始写数据
+                HttpUtils.finishResponseHeader(output);
 
                 int ch = fis.read(bytes, 0, BUFFER_SIZE);
                 while (ch != -1) {

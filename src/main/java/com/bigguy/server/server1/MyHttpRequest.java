@@ -1,11 +1,10 @@
 package com.bigguy.server.server1;
 
-import com.bigguy.server.cst.SystemCst;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
 
 /**
  * @author bigguy_hc
@@ -22,7 +21,9 @@ public class MyHttpRequest {
      */
     private StringBuffer buffer = new StringBuffer(1024*2);
 
-    // 请求链接
+    /**
+     * 请求链接
+     */
     private String requestUri;
 
     public MyHttpRequest(InputStream inputStream) {
@@ -41,11 +42,13 @@ public class MyHttpRequest {
             e.printStackTrace();
             len = -1;
         }
-        for (int j=0; j<len; j++){
-            buffer.append((char)bufferArr[j]);
-        }
 
-        System.out.println("request content：" + buffer.toString());
+        if(len <= 0){
+            return;
+        }
+        buffer.append(new String(bufferArr, 0, len));
+
+        System.out.println("request content：\n" + buffer.toString());
 
         // 解析出 requestUri
         this.requestUri = parseUri(buffer.toString());
@@ -65,6 +68,8 @@ public class MyHttpRequest {
             index2 = requestData.indexOf(' ', index1 + 1);
             return requestData.substring(index1 + 1, index2);
         }
-        return null;
+
+        // 防止后面空指针
+        return StringUtils.EMPTY;
     }
 }

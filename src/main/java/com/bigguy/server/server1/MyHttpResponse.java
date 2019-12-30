@@ -1,9 +1,14 @@
 package com.bigguy.server.server1;
 
-import com.bigguy.server.cst.SystemCst;
+import com.bigguy.server.cst.HttpCst;
+import com.bigguy.server.util.HttpUtils;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * @author bigguy_hc
@@ -29,13 +34,27 @@ public class MyHttpResponse {
         String path = request.getRequestUri();
         FileInputStream fis = null;
 
-        File file = new File(SystemCst.WEB_ROOT, path);
+        // 防止请求路径为空报异常
+        if(StringUtils.isBlank(path)){
+            return;
+        }
+
+        File file = new File(MyHttpServer.WEB_ROOT, path);
         try {
             if(file.exists()){
                 fis = new FileInputStream(file);
+
+                // 写成功
+                HttpUtils.responseSuccess(outputStream);
+
+                if(HttpUtils.isImgUri(request.getRequestUri())){
+                    HttpUtils.setContentType(outputStream, HttpCst.Content_Type.IMG_Content_Type);
+                }
+
+                // 头写完成
+                HttpUtils.finishResponseHeader(outputStream);
                 int len ;
                 while ((len = fis.read(buffer)) != -1){
-
                     // 写到输出流中
                     outputStream.write(buffer, 0, len);
                 }
@@ -53,7 +72,7 @@ public class MyHttpResponse {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            if(null == fis){
+            if(null != fis){
                 fis.close();
             }
         }

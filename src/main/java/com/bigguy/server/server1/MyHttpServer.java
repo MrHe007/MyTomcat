@@ -3,9 +3,11 @@ package com.bigguy.server.server1;
 import com.bigguy.server.cst.SystemCst;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,6 +18,12 @@ import java.net.Socket;
  */
 public class MyHttpServer {
 
+
+    /**
+     * 服务器的根目录
+     */
+    public static final String WEB_ROOT =
+            System.getProperty("user.dir") + File.separator  + "webroot";
     private boolean shutdown = false;
 
     private ServerSocket serverSocket;
@@ -30,7 +38,7 @@ public class MyHttpServer {
     }
 
     public static void main(String[] args) throws IOException {
-        int port = 8888;
+        int port = 8081;
         MyHttpServer httpServer = new MyHttpServer(port);
 
         // 运行服务器
@@ -44,8 +52,12 @@ public class MyHttpServer {
      * 初始化容器资源
      */
     public void init(int port) {
+        System.out.println("server init.... port：" + port);
+        System.out.println("server root path: " + WEB_ROOT);
         try {
-            this.serverSocket = new ServerSocket(port);
+            // 不能写成下面这个形式
+//            this.serverSocket = new ServerSocket(port);
+            this.serverSocket = new ServerSocket(port, 1, InetAddress.getByName("127.0.0.1"));
         } catch (IOException e) {
             e.printStackTrace();
         }
