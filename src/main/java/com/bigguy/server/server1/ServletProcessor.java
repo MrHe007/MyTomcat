@@ -113,11 +113,11 @@ public class ServletProcessor implements WebProcessor{
             ResponseHandleUtils.responseHtmlOk(response.getOutputStream());
 
             // 向下转型
-            MyHttpRequest httpRequest = (MyHttpRequest)request;
-            MyHttpResponse httpResponse = (MyHttpResponse)response;
+            RequestFacade requestFacade = new RequestFacade(request);
+            ResponseFacade responseFacade = new ResponseFacade(response);
 
             // 调用 servlet 的服务类
-            servlet.service(httpRequest, httpResponse);
+            servlet.service(requestFacade, responseFacade);
 
         } catch (Exception e) {
             e.printStackTrace();
