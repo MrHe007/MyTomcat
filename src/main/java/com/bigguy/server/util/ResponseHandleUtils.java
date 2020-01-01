@@ -27,6 +27,20 @@ import java.io.*;
 public class ResponseHandleUtils {
 
 
+    /**
+     * 写一个 html 成功
+     * @param outputStream
+     */
+    public static void responseHtmlOk(OutputStream outputStream){
+        responseSuccess(outputStream);
+        setContentType(outputStream, HttpCst.ContentType.HTML_TEXT);
+
+        // http 协议：头部和实体数据之间需要用一个空行隔开
+        finishResponseHeader(outputStream);
+    }
+
+
+
     /***
      * @Description  处理文件找不到错误
      * @Author  hechen

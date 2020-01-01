@@ -13,6 +13,7 @@ you entered into with IBOXCHAIN inc.
 */
 package com.bigguy.server.server1;
 
+import com.bigguy.server.util.ResponseHandleUtils;
 import com.bigguy.server.util.SystemUtils;
 
 import javax.servlet.Servlet;
@@ -62,12 +63,19 @@ public class ServletProcessor implements WebProcessor{
      */
 
 
+    @Override
     public void process(MyHttpRequest request, MyHttpResponse response){
 
         String requestUri = request.getRequestUri();
 
+        // /servlet/LoginServlet
         String servletName = requestUri.substring(requestUri.indexOf("/") + 1);
 
+        // 提取真正的类名：LoginServlet
+        servletName = servletName.substring(servletName.indexOf("servlet")+ "servlet".length()+1);
+
+        // todo: 加载类需要指定包名,下载假设所有的 servlet 都在这个包下面
+        servletName = "com.bigguy.server.server1." + servletName;
 
         URLClassLoader loader = null;
 
@@ -90,25 +98,30 @@ public class ServletProcessor implements WebProcessor{
         Servlet servlet = null;
         try {
 
-            //  servlet 为类名
+            //  servlet 为类名（如果有包名，需要指定包名：com.bigguy.servlet.LoginServlet）
             myClass = loader.loadClass(servletName);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
         try {
+
+            // 通过字节码反射得到 Servlet 的实体类
             servlet = (Servlet)myClass.newInstance();
 
-            // todo： 调用 servlet 服务类
-//            servlet.service();
+            // 写成功
+            ResponseHandleUtils.responseHtmlOk(response.getOutputStream());
 
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+            // 向下转型
+            MyHttpRequest httpRequest = (MyHttpRequest)request;
+            MyHttpResponse httpResponse = (MyHttpResponse)response;
+
+            // 调用 servlet 的服务类
+            servlet.service(httpRequest, httpResponse);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
 }

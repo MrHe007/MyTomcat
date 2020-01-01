@@ -98,9 +98,8 @@ public class MyHttpServer {
                 processor = new StaticProcessor();
             }
 
+            processor.process(request, response);
 
-            // 处理响应
-            response.handleResponse();
             // 关闭客户端连接
             clientSocket.close();
 

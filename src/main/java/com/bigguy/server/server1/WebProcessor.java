@@ -23,7 +23,7 @@ import java.io.IOException;
 public interface WebProcessor {
 
     /**
-     * 处理器
+     * 处理器处理方法
      * @param request
      * @param response
      */
