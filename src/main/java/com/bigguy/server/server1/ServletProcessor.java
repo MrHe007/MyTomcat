@@ -27,7 +27,7 @@ import java.net.URLStreamHandler;
  * @data ：2019/12/31
  * @description ：
  */
-public class ServletProcessor {
+public class ServletProcessor implements WebProcessor{
 
 
     public static void main(String[] args) throws Exception {

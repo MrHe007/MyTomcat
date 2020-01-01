@@ -88,6 +88,17 @@ public class MyHttpServer {
             MyHttpResponse response = new MyHttpResponse(outputStream);
             response.setRequest(request);
 
+            WebProcessor processor = null;
+            // 如果以 servlet 开头表示处理 servlet
+            if(StringUtils.isNotBlank(request.getRequestUri()) && request.getRequestUri().startsWith("/servlet/")){
+                processor = new ServletProcessor();
+
+            }else {
+                // 否则处理静态数据
+                processor = new StaticProcessor();
+            }
+
+
             // 处理响应
             response.handleResponse();
             // 关闭客户端连接
