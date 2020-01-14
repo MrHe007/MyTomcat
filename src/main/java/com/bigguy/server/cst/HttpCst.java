@@ -31,9 +31,15 @@ public interface HttpCst {
     interface ResponseHeader{
         String CONTENT_TYPE = "content-type: ";
 
-
         String CONTENT_LENGTH = "Content_length: ";
+
+        /**
+         * 服务器
+         */
+        String SERVER = "Server";
+
     }
+
 
     /**
      * 响应状态
@@ -57,6 +63,7 @@ public interface HttpCst {
 
 
     }
+
 
     /**
      * 响应类型

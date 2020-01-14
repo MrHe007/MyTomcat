@@ -11,12 +11,25 @@ in accordance with the terms of the contract agreement
 you entered into with IBOXCHAIN inc.
 
 */
-package com.bigguy.server.util;
+package com.bigguy.server.processor;
+
+import com.bigguy.server.http.HttpRequest;
+import com.bigguy.server.http.HttpResponse;
+
+import java.io.IOException;
 
 /**
  * @author ：hechen
- * @data ：2019/12/30
- * @description ：请求处理类
+ * @data ：2020/1/1
+ * @description ：
  */
-public class RequestHandleUtils {
+public interface WebProcessor {
+
+    /**
+     * 处理器处理方法
+     * @param request
+     * @param response
+     */
+    public void process(HttpRequest request, HttpResponse response) throws IOException;
+
 }

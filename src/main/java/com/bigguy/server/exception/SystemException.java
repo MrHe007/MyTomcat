@@ -11,22 +11,28 @@ in accordance with the terms of the contract agreement
 you entered into with IBOXCHAIN inc.
 
 */
-package com.bigguy.server.server1;
+package com.bigguy.server.exception;
 
-import java.io.IOException;
+import lombok.Data;
 
 /**
  * @author ：hechen
  * @data ：2020/1/1
- * @description ：
+ * @description ：系统错误
  */
-public interface WebProcessor {
+@Data
+public class SystemException extends RuntimeException{
 
-    /**
-     * 处理器处理方法
-     * @param request
-     * @param response
-     */
-    public void process(MyHttpRequest request, MyHttpResponse response) throws IOException;
+    private String errorCode;
+    private String errorDesc;
 
+    public SystemException() {
+        String errorDesc = "系统错误";
+        this.errorDesc = errorDesc;
+    }
+
+    public SystemException(String errorDesc) {
+        super(errorDesc);
+        this.errorDesc = errorDesc;
+    }
 }

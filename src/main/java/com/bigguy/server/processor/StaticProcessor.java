@@ -11,9 +11,12 @@ in accordance with the terms of the contract agreement
 you entered into with IBOXCHAIN inc.
 
 */
-package com.bigguy.server.server1;
+package com.bigguy.server.processor;
 
 import com.bigguy.server.cst.HttpCst;
+import com.bigguy.server.http.HttpRequest;
+import com.bigguy.server.http.HttpResponse;
+import com.bigguy.server.server1.MyHttpServer;
 import com.bigguy.server.util.HttpUtils;
 import com.bigguy.server.util.ResponseHandleUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -36,12 +39,12 @@ public class StaticProcessor implements WebProcessor {
     private Logger logger = LoggerFactory.getLogger(StaticProcessor.class);
 
     @Override
-    public void process(MyHttpRequest request, MyHttpResponse response) throws IOException {
+    public void process(HttpRequest request, HttpResponse response) throws IOException {
         // 处理静态资源，直接将静态资源从文件流中读出， 写到浏览器输出流中
 
         OutputStream outputStream = response.getOutputStream();
         byte[] buffer = new byte[BUFFER_SIZE];
-        String path = request.getRequestUri();
+        String path = request.getRequestURI();
         FileInputStream fis = null;
 
         // 防止请求路径为空报异常
@@ -57,7 +60,7 @@ public class StaticProcessor implements WebProcessor {
                 // 写成功
                 ResponseHandleUtils.responseSuccess(outputStream);
 
-                if(HttpUtils.isImgUri(request.getRequestUri())){
+                if(HttpUtils.isImgUri(request.getRequestURI())){
                     ResponseHandleUtils.setContentType(outputStream, HttpCst.ContentType.IMG_CONTENT_TYPE);
                 }
 

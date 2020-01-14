@@ -11,8 +11,13 @@ in accordance with the terms of the contract agreement
 you entered into with IBOXCHAIN inc.
 
 */
-package com.bigguy.server.server1;
+package com.bigguy.server.processor;
 
+import com.bigguy.server.http.HttpRequest;
+import com.bigguy.server.http.HttpResponse;
+import com.bigguy.server.http.facade.HttpRequestFacade;
+import com.bigguy.server.http.facade.HttpResponseFacade;
+import com.bigguy.server.server1.MyHttpServer;
 import com.bigguy.server.util.ResponseHandleUtils;
 import com.bigguy.server.util.SystemUtils;
 
@@ -64,9 +69,8 @@ public class ServletProcessor implements WebProcessor{
 
 
     @Override
-    public void process(MyHttpRequest request, MyHttpResponse response){
-
-        String requestUri = request.getRequestUri();
+    public void process(HttpRequest request, HttpResponse response){
+        String requestUri = request.getRequestURI();
 
         // /servlet/LoginServlet
         String servletName = requestUri.substring(requestUri.indexOf("/") + 1);
@@ -113,8 +117,8 @@ public class ServletProcessor implements WebProcessor{
             ResponseHandleUtils.responseHtmlOk(response.getOutputStream());
 
             // 向下转型
-            RequestFacade requestFacade = new RequestFacade(request);
-            ResponseFacade responseFacade = new ResponseFacade(response);
+            HttpRequestFacade requestFacade = new HttpRequestFacade(request);
+            HttpResponseFacade responseFacade = new HttpResponseFacade(response);
 
             // 调用 servlet 的服务类
             servlet.service(requestFacade, responseFacade);
