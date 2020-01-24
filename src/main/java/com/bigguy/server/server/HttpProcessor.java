@@ -43,9 +43,6 @@ public class HttpProcessor{
     private HttpRequest request;
     private HttpResponse response;
     private HttpRequestLine requestLine = new HttpRequestLine();
-    protected String method = null;
-    protected String queryString = null;
-
 
     public void process(Socket socket){
         try {
@@ -64,7 +61,7 @@ public class HttpProcessor{
             parseRequest(inputStream);
 
             // 解析请求头
-            parseRequestHeader(inputStream);
+            parseHeader(inputStream);
 
             // 根据不同的请求前缀调用不同的处理器进行处理
             WebProcessor processor;
@@ -77,7 +74,8 @@ public class HttpProcessor{
             // 处理器进行处理
             processor.process(request, response);
 
-
+            // 关闭socket
+            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -234,7 +232,7 @@ public class HttpProcessor{
      * 解析请求
      * @param inputStream
      */
-    private void parseRequestHeader(SocketInputStream inputStream) throws IOException {
+    private void parseHeader(SocketInputStream inputStream) throws IOException {
 
         while (true) {
             HttpHeader header = new HttpHeader();;

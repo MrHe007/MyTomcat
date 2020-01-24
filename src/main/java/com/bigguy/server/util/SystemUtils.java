@@ -14,7 +14,6 @@ you entered into with IBOXCHAIN inc.
 package com.bigguy.server.util;
 
 import com.bigguy.server.cst.SystemCst;
-import com.bigguy.server.server1.MyHttpServer;
 
 import java.io.File;
 
@@ -36,7 +35,7 @@ public class SystemUtils {
      * @return
      */
     public static String getPagesDirPath(){
-        String path = MyHttpServer.WEB_ROOT + SystemCst.PAGE_DIR + File.separator;
+        String path = SystemCst.WEB_ROOT + SystemCst.PAGE_DIR + File.separator;
         return path;
     }
 

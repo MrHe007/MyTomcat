@@ -14,9 +14,9 @@ you entered into with IBOXCHAIN inc.
 package com.bigguy.server.processor;
 
 import com.bigguy.server.cst.HttpCst;
+import com.bigguy.server.cst.SystemCst;
 import com.bigguy.server.http.HttpRequest;
 import com.bigguy.server.http.HttpResponse;
-import com.bigguy.server.server1.MyHttpServer;
 import com.bigguy.server.util.HttpUtils;
 import com.bigguy.server.util.ResponseHandleUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -52,7 +52,7 @@ public class StaticProcessor implements WebProcessor {
             return;
         }
 
-        File file = new File(MyHttpServer.WEB_ROOT, path);
+        File file = new File(SystemCst.WEB_ROOT, path);
         try {
             if(file.exists()){
                 fis = new FileInputStream(file);

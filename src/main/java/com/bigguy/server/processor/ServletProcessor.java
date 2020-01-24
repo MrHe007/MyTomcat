@@ -13,11 +13,11 @@ you entered into with IBOXCHAIN inc.
 */
 package com.bigguy.server.processor;
 
+import com.bigguy.server.cst.SystemCst;
 import com.bigguy.server.http.HttpRequest;
 import com.bigguy.server.http.HttpResponse;
 import com.bigguy.server.http.facade.HttpRequestFacade;
 import com.bigguy.server.http.facade.HttpResponseFacade;
-import com.bigguy.server.server1.MyHttpServer;
 import com.bigguy.server.util.ResponseHandleUtils;
 import com.bigguy.server.util.SystemUtils;
 
@@ -39,7 +39,7 @@ public class ServletProcessor implements WebProcessor{
     public static void main(String[] args) throws Exception {
 
         URLClassLoader loader = null;
-        File classPath = new File(MyHttpServer.WEB_ROOT);
+        File classPath = new File(SystemCst.WEB_ROOT);
         URL[] urls = new URL[1];
         URLStreamHandler streamHandler = null;
         String repository = (new URL("file", null, classPath.getCanonicalPath() + File.separator)).toString();
@@ -86,7 +86,7 @@ public class ServletProcessor implements WebProcessor{
         URL[] urls = new URL[1];
         URLStreamHandler streamHandler = null;
 
-        File classPath = new File(MyHttpServer.WEB_ROOT);
+        File classPath = new File(SystemCst.WEB_ROOT);
 
         try {
             String repository = (new URL("file", null, classPath.getCanonicalPath() + File.separator)).toString();
@@ -121,7 +121,7 @@ public class ServletProcessor implements WebProcessor{
             HttpResponseFacade responseFacade = new HttpResponseFacade(response);
 
             // 调用 servlet 的服务类
-            servlet.service(requestFacade, responseFacade);
+            servlet.service(requestFacade, null);
 
         } catch (Exception e) {
             e.printStackTrace();

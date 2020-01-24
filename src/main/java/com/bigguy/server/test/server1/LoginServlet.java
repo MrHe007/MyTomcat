@@ -11,7 +11,7 @@ in accordance with the terms of the contract agreement
 you entered into with IBOXCHAIN inc.
 
 */
-package com.bigguy.server.server1;
+package com.bigguy.server.test.server1;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

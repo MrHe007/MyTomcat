@@ -1,9 +1,8 @@
-package com.bigguy.server.server2;
+package com.bigguy.server.test.server2;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 /**
  * @author bigguy_hc

@@ -220,7 +220,7 @@ public class HttpRequestFacade implements HttpServletRequest {
     }
 
     @Override
-    public ServletInputStream getInputStream() throws IOException {
+    public javax.servlet.ServletInputStream getInputStream() throws IOException {
         return null;
     }
 
@@ -345,7 +345,7 @@ public class HttpRequestFacade implements HttpServletRequest {
     }
 
     @Override
-    public AsyncContext startAsync(ServletRequest servletRequest, ServletResponse servletResponse) throws IllegalStateException {
+    public AsyncContext startAsync(ServletRequest servletRequest, javax.servlet.ServletResponse servletResponse) throws IllegalStateException {
         return null;
     }
 

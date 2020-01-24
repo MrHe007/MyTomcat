@@ -12,7 +12,7 @@ public interface SystemCst {
     /**
      * 资源路径
      */
-    String WEB_ROOT = "D:\\webroot";
+    String WEB_ROOT = System.getProperty("user.dir") + File.separator  + "webroot";
 
     /**
      * 页面存放目录
